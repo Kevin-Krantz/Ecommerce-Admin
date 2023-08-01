@@ -26,5 +26,10 @@ export default function Home(): JSX.Element {
     );
   }
 
-  return <div>logged in {session.user?.email}</div>;
+  return (
+    <div>
+      logged in {session.user?.email}
+      {/* <button onClick={() => signOut()}>logout</button> */}
+    </div>
+  );
 }
