@@ -1,18 +1,23 @@
 "use client";
-
 import "./globals.css";
-import ProvidersWrapper from "./ProvidersWrapper";
+import type { Metadata } from "next";
+import { SessionProvider } from "next-auth/react";
 
-export default function DashboardLayout({
+export const metadata: Metadata = {
+  title: "asdasdas",
+  description: "asdasdasd",
+};
+
+export default function RootLayout({
   children,
 }: {
   children: React.ReactNode;
 }): JSX.Element {
   return (
     <html>
-      <body>
-        <ProvidersWrapper>{children}</ProvidersWrapper>
-      </body>
+      <SessionProvider>
+        <body>{children}</body>
+      </SessionProvider>
     </html>
   );
 }
