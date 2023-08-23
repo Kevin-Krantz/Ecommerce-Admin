@@ -7,6 +7,7 @@ export default function Layout({
   children: React.ReactNode;
 }): JSX.Element {
   const { data: session } = useSession();
+
   if (!session) {
     return (
       <div className="bg-blue-900 w-screen h-screen flex items-center">
