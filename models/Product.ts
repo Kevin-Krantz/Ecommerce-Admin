@@ -6,6 +6,7 @@ const ProductSchema = new Schema<IProductDocument>({
   title: { type: String, required: true },
   description: String,
   price: { type: Number, required: true },
+  images: [{ type: String }],
 });
 
 let Product: Model<IProductDocument>;
