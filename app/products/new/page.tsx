@@ -7,7 +7,7 @@ export default function NewProduct(): JSX.Element {
   return (
     <Layout>
       <h1>New Product</h1>
-      <ProductsForm title="" description="" price={0} />
+      <ProductsForm images="" title="" description="" price={0} />
     </Layout>
   );
 }

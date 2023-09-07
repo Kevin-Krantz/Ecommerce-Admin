@@ -1,7 +1,4 @@
 import mime from "mime";
-import { join } from "path";
-import { stat, mkdir, writeFile } from "fs/promises";
-import * as dateFn from "date-fns";
 import { NextRequest, NextResponse } from "next/server";
 import { PutObjectCommand, S3Client } from "@aws-sdk/client-s3";
 
