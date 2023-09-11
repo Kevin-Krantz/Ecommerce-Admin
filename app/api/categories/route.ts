@@ -1,5 +1,7 @@
 import { mongooseConnect } from "@/lib/mongoose";
 import Category from "@/models/Category";
+import { authOptions } from "@/pages/api/auth/[...nextauth]";
+import { getServerSession } from "next-auth";
 import { NextRequest, NextResponse } from "next/server";
 
 export async function POST(req: NextRequest) {
@@ -21,6 +23,10 @@ export async function POST(req: NextRequest) {
 
 export async function GET(req: NextRequest) {
   await mongooseConnect();
+
+  const session = await getServerSession(authOptions);
+
+  console.log(session);
 
   const url = new URL(req.url);
   const id = url.searchParams.get("id");

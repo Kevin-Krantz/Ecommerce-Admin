@@ -5,9 +5,6 @@ import Layout from "../components/Layout";
 import axios from "axios";
 import { ICategory } from "@/types/ICategory";
 import SweetAlert2 from "react-sweetalert2";
-
-// 4:51:00
-
 interface ICategoryWithID extends ICategory {
   _id: string;
 }
