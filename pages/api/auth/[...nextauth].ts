@@ -23,19 +23,12 @@ export const authOptions: NextAuthOptions = {
       account?: Account | null;
       profile?: Profile | undefined;
     }): Promise<boolean> {
-      if (
-        account &&
-        account.provider === "google" &&
-        profile &&
-        profile.email
-      ) {
-        return adminEmails.includes(profile.email);
-      }
       return true;
     },
     session: async ({ session, token, user }) => {
       const email = session?.user?.email;
       const isAdmin = email && adminEmails.includes(email);
+
       if (isAdmin) {
         return {
           ...session,
@@ -46,8 +39,11 @@ export const authOptions: NextAuthOptions = {
         };
       } else {
         return {
-          user: {},
-          expires: new Date().toISOString(),
+          ...session,
+          user: {
+            ...session.user,
+            isAdmin: false,
+          },
         };
       }
     },
