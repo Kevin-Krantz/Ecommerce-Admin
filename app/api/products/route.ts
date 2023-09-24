@@ -1,10 +1,27 @@
 import { mongooseConnect } from "@/lib/mongoose";
 import Product from "@/models/Product";
+import { authOptions } from "@/pages/api/auth/[...nextauth]";
+import { SessionUserWithAdmin } from "@/types/SessionUserWithAdmin";
 import { _id } from "@next-auth/mongodb-adapter";
+import { getServerSession } from "next-auth";
 import { NextRequest, NextResponse } from "next/server";
 
 export async function POST(req: NextRequest) {
   await mongooseConnect();
+
+  const session = await getServerSession(authOptions);
+  const { isAdmin } = session?.user as SessionUserWithAdmin;
+
+  if (!isAdmin) {
+    return NextResponse.json(
+      {
+        error:
+          "Access Denied: You do not have permission to perform this action.",
+      },
+      { status: 403 }
+    );
+  }
+
   const data = await req.json();
   const { title, description, price, images, category, properties } = data;
 
@@ -37,6 +54,19 @@ export async function GET(req: NextRequest) {
 
 export async function PUT(req: NextRequest) {
   await mongooseConnect();
+
+  const session = await getServerSession(authOptions);
+  const { isAdmin } = session?.user as SessionUserWithAdmin;
+
+  if (!isAdmin) {
+    return NextResponse.json(
+      {
+        error:
+          "Access Denied: You do not have permission to perform this action.",
+      },
+      { status: 403 }
+    );
+  }
 
   const data = await req.json();
   const { title, description, price, images, _id, category, properties } = data;
@@ -72,6 +102,19 @@ export async function PUT(req: NextRequest) {
 
 export async function DELETE(req: NextRequest) {
   await mongooseConnect();
+
+  const session = await getServerSession(authOptions);
+  const { isAdmin } = session?.user as SessionUserWithAdmin;
+
+  if (!isAdmin) {
+    return NextResponse.json(
+      {
+        error:
+          "Access Denied: You do not have permission to perform this action.",
+      },
+      { status: 403 }
+    );
+  }
 
   const url = new URL(req.url);
   const id = url.searchParams.get("id");

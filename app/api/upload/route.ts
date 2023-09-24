@@ -1,6 +1,9 @@
 import mime from "mime";
 import { NextRequest, NextResponse } from "next/server";
 import { PutObjectCommand, S3Client } from "@aws-sdk/client-s3";
+import { authOptions } from "@/pages/api/auth/[...nextauth]";
+import { SessionUserWithAdmin } from "@/types/SessionUserWithAdmin";
+import { getServerSession } from "next-auth";
 
 const bucketName = "kevin-next-ecommerce";
 
@@ -22,6 +25,19 @@ async function uploadToS3(
 
 export async function POST(request: NextRequest) {
   const formData = await request.formData();
+
+  const session = await getServerSession(authOptions);
+  const { isAdmin } = session?.user as SessionUserWithAdmin;
+
+  if (!isAdmin) {
+    return NextResponse.json(
+      {
+        error:
+          "Access Denied: You do not have permission to perform this action.",
+      },
+      { status: 403 }
+    );
+  }
 
   const client = new S3Client({
     region: "eu-north-1",
