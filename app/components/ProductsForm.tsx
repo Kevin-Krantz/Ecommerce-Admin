@@ -170,19 +170,21 @@ export default function ProductsForm({
       </select>
       {propertiesToFill.length > 0 &&
         propertiesToFill.map((p) => (
-          <div className="flex gap-1" key={p._id}>
-            <div>{p.name}</div>
-            <select
-              value={String(productProperties[p.name] || "")}
-              onChange={(ev) => setProductProp(p.name, ev.target.value)}
-            >
-              <option value="">{`Select ${p.name.toLowerCase()}`}</option>
-              {p.values.map((v) => (
-                <option key={`${p._id}-${v}`} value={v}>
-                  {v}
-                </option>
-              ))}
-            </select>
+          <div className="" key={p._id}>
+            <label>{p.name[0].toUpperCase() + p.name.substring(1)}</label>
+            <div>
+              <select
+                value={String(productProperties[p.name] || "")}
+                onChange={(ev) => setProductProp(p.name, ev.target.value)}
+              >
+                <option value="">{`Select ${p.name.toLowerCase()}`}</option>
+                {p.values.map((v) => (
+                  <option key={`${p._id}-${v}`} value={v}>
+                    {v}
+                  </option>
+                ))}
+              </select>
+            </div>
           </div>
         ))}
 
@@ -193,8 +195,11 @@ export default function ProductsForm({
           list={imageUrl}
           setList={updateImagesOrder}
         >
-          {imageUrl.map((url: any, index: any) => (
-            <div key={index} className="h-24">
+          {imageUrl.map((url: string, index: any) => (
+            <div
+              key={index}
+              className="h-24 bg-white p-2 shadow-sm rounded-lg border border-gray-200"
+            >
               <img
                 className="rounded-lg"
                 key={index}
@@ -209,7 +214,7 @@ export default function ProductsForm({
             <Spinner />
           </div>
         )}
-        <label className="inline-block w-24 h-24 cursor-pointer text-center flex flex-col items-center justify-center text-sm gap-1 text-gray-500 rounded-lg bg-gray-200">
+        <label className="w-24 h-24 cursor-pointer text-center flex flex-col items-center justify-center text-sm gap-1 text-primary rounded-lg bg-white shadow-sm border border-primary">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             fill="none"
@@ -224,7 +229,7 @@ export default function ProductsForm({
               d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5m-13.5-9L12 3m0 0l4.5 4.5M12 3v13.5"
             />
           </svg>
-          <div>Upload</div>
+          <div>Add image</div>
           <input type="file" onChange={uploadImages} className="hidden" />
         </label>
       </div>
