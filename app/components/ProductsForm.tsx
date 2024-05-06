@@ -239,7 +239,7 @@ export default function ProductsForm({
         value={description}
         onChange={(ev) => setDescription(ev.target.value)}
       />
-      <label>Price (in USD)</label>
+      <label>Price (in SEK)</label>
       <input
         type="number"
         placeholder="price"
